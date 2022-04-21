@@ -25,3 +25,6 @@ chromedriver需要放到和crawl_baidupic.py同路径
 从exe直接运行（不用安装python环境）：
 chromedriver需要放到和crawl_bilibili.exe同路径
 直接双击exe运行即可
+
+##proxyCrawl
+proxyCrawl为一个示例类，演示如何通过给Chrome添加proxy从而获取浏览器Network数据
