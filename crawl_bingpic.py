@@ -28,7 +28,12 @@ def get_img(keyword, num):
 
     import pdb
     pdb.set_trace()
-    ele = b.find_element(by=By.XPATH,value='//*[@id="mainImageWindow"]')
+    # ele = b.find_element(by=By.XPATH,value='//*[@id="mainImageWindow"]')
+    '//*[@id="mainImageWindow"]/div[1]/div/div/div/img'
+
+    ele = b.find_element(by=By.XPATH,
+                         value='//*[@id="mainImageContainer"]')
+    ActionChains(b).move_to_element(ele).perform()
     try:
         ele = b.find_element(by=By.XPATH,
                          value='//*[@id="mainImageWindow"]/div[1]/div/div/div/img')
