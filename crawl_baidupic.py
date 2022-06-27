@@ -88,7 +88,7 @@ def again(name,num,size):
         run(name,num,size)
     except:
         print("爬取出错，正在重试".center(50,"^"))
-        again(name,num)
+        again(name,num,size)
     finally:
         print("结束爬取")
 
@@ -103,4 +103,5 @@ if __name__ == "__main__":
     b = webdriver.Chrome('.\chromedriver')
 
     again(name,num,size)
+    b.close()
     print("爬取完毕".center(50,"*"))

@@ -4,12 +4,13 @@ import os
 from multiprocessing.dummy import Pool
 import json
 from time import time
+import re
 
 
 # 作用：按关键字、图片数量爬取必应图片，存放到指定路径。
 # 使用方法：只需运行一条命令 BingImagesSpider('电脑美女壁纸', 200, 'E:\images').run()
 class BingImagesSpider:
-    thread_amount = 100  # 线程池数量，线程池用于多IO请求，减少总的http请求时间
+    thread_amount = 1000  # 线程池数量，线程池用于多IO请求，减少总的http请求时间
     per_page_images = 30  # 每页必应请求的图片数
     count = 0  # 图片计数
     success_count = 0
@@ -82,7 +83,12 @@ class BingImagesSpider:
     # 请求具体图片，保存到初始化时指定的路径
     def request_and_save_image(self, info):
         # info: 每个图片的信息,以字典对象存储。字典的键包括 image_title, image_type, image_md5, image_url
-        filename = '{} {}.{}'.format(self.count, info['image_title'], info['image_type'])
+        filename = '{}_{}.{}'.format(info['image_title'], self.count,  info['image_type'])
+        filename=re.sub('[\/:*?"<>|]', '_', filename) # 用_替换非法字符
+
+        for i in range(len(filename)):
+            if filename[i] == "\\":
+                filename[i]='_'
         filepath = os.path.join(self.path, filename)
 
         try:
@@ -152,6 +158,8 @@ if __name__ == '__main__':
     # 关键词：电脑壁纸
     # 需要的图片数量：100
     # 图片保存路径：'E:\images'
+    keyword = input('keyword: ')
+    num = int(input('num: '))
     start = time()
-    BingImagesSpider('girl', 100, 'E:\images').run()
-    print(time() - start)
+    BingImagesSpider(keyword, num, path='.\\' + keyword).run()
+    print("time cost: "+ str(time() - start))
